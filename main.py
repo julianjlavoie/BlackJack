@@ -12,7 +12,7 @@ import random
 # # The deck is unlimited in size.
 # ## There are no jokers.
 # # The Jack/Queen/King all count as 10.
-# # The the Ace can count as 11 or 1.
+# # The Ace can count as 11 or 1.
 # # Use the following list as the deck of cards:
 # # cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 # # The cards in the list have equal probability of being drawn.
@@ -86,7 +86,7 @@ def addcard(who):
 
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-dealerrange = [18, 19, 20, 21]
+dealerrange = [15, 16, 17, 18]
 playing = "y"
 while playing == "y":
     playercards = []
@@ -123,3 +123,10 @@ while playing == "y":
                 dealerscore += addcard("dealer")
             else:
                 dealerhold = True
+    else:
+        print(f"Your score: {playerscore}\nDealer score: {dealerscore}")
+
+        if dealerscore < playerscore <= 21 or dealerscore > 21 >= playerscore:
+            print("You are the Winner!")
+        elif playerscore < dealerscore <= 21 or playerscore > 21 >= dealerscore:
+            print("Dealer is the Winner. Better luck next time.")
