@@ -1,5 +1,6 @@
 import random
 
+
 # ############## Blackjack Project #####################
 
 # Difficulty Normal 😎: Use all Hints below to complete the project.
@@ -74,23 +75,28 @@ import random
 # game of blackjack and show the logo from art.py.
 
 
-def addcard(who):
+def addcard(who, score):
+    card = int(random.choice(cards))
+
+    def formatscore(_score):
+        if card != 11 or (_score + card) <= 21:
+            return card
+        else:
+            return 1
+
     if who == "player":
-        card = random.choice(cards)
-        playercards.append(card)
-        return int(card)
+        playercards.append(str(formatscore(score)))
+        return int(formatscore(score))
     elif who == "dealer":
-        card = random.choice(cards)
-        dealercards.append(card)
-        return int(card)
+        dealercards.append(str(formatscore(score)))
+        return int(formatscore(score))
 
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 dealerrange = [15, 16, 17, 18]
 
-playing = input("Do you want to play a hand of Blackjack? y/n ")
 
-playing = "y"
+playing = input("Do you want to play a hand of Blackjack? y/n ")
 while playing == "y":
     playercards = []
     dealercards = []
@@ -99,13 +105,12 @@ while playing == "y":
     playerhold = False
     dealerhold = False
 
-
     # Game Setup
 
-    playerscore += addcard("player")
-    playerscore += addcard("player")
-    dealerscore += addcard("dealer")
-    dealerscore += addcard("dealer")
+    playerscore += addcard("player", playerscore)
+    playerscore += addcard("player", playerscore)
+    dealerscore += addcard("dealer", dealerscore)
+    dealerscore += addcard("dealer", dealerscore)
 
     # while neither score is 21 or over and at least one player is still hitting
     while playerscore < 21 and dealerscore < 21 and (playerhold is False or dealerhold is False):
@@ -113,9 +118,9 @@ while playing == "y":
             print(f"Your cards: {playercards}"), print(f"Dealers cards: {dealercards[0]}")
             response = input("Hit (H) or Stay (S)")
             if response == "H":
-                playerscore += addcard("player")
+                playerscore += addcard("player", playerscore)
                 if dealerscore < random.choice(dealerrange):
-                    dealerscore += addcard("dealer")
+                    dealerscore += addcard("dealer", dealerscore)
                 else:
                     dealerhold = True
             else:
@@ -123,11 +128,12 @@ while playing == "y":
         # If player holds, is dealer still hitting?
         else:
             if dealerhold is False and dealerscore < random.choice(dealerrange):
-                dealerscore += addcard("dealer")
+                dealerscore += addcard("dealer", dealerscore)
             else:
                 dealerhold = True
     else:
-        print(f"Your score: {playerscore}\nDealer score: {dealerscore}")
+        print(f"Your score: {playerscore}\nYour Cards: {playercards}\n"
+              f"Dealer score: {dealerscore}\nDealers Cards: {dealercards}")
 
         if dealerscore < playerscore <= 21 or dealerscore > 21 >= playerscore:
             print("You are the Winner!")
