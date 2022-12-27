@@ -87,6 +87,9 @@ def addcard(who):
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 dealerrange = [15, 16, 17, 18]
+
+playing = input("Do you want to play a hand of Blackjack? y/n ")
+
 playing = "y"
 while playing == "y":
     playercards = []
@@ -96,18 +99,18 @@ while playing == "y":
     playerhold = False
     dealerhold = False
 
-    playing = input("Do you want to play a hand of Blackjack? y/n ")
+
     # Game Setup
 
     playerscore += addcard("player")
     playerscore += addcard("player")
     dealerscore += addcard("dealer")
     dealerscore += addcard("dealer")
-    print(f"Your cards: {playercards}"), print(f"Dealers cards: {dealercards[0]}")
 
     # while neither score is 21 or over and at least one player is still hitting
     while playerscore < 21 and dealerscore < 21 and (playerhold is False or dealerhold is False):
         if playerhold is False:
+            print(f"Your cards: {playercards}"), print(f"Dealers cards: {dealercards[0]}")
             response = input("Hit (H) or Stay (S)")
             if response == "H":
                 playerscore += addcard("player")
@@ -130,3 +133,4 @@ while playing == "y":
             print("You are the Winner!")
         elif playerscore < dealerscore <= 21 or playerscore > 21 >= dealerscore:
             print("Dealer is the Winner. Better luck next time.")
+    playing = input("Do you want to play again? y/n ")
